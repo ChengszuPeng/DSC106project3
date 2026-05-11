@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Climate Futures Across Regions</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">DSC 106 Project 3 · Interactive Visualization</p>
+      <h1>How do temperature, precipitation, and greenhouse gas pathways change across regions and future scenarios?</h1>
+      <p class="subtitle">This interactive web page compares historical climate trends with three future SSP pathways. Use the controls to switch region, metric, scenario, and focus year.</p>
+    </section>
+
+    <section class="controls">
+      <div>
+        <label for="regionSelect">Region</label>
+        <select id="regionSelect"></select>
+      </div>
+      <div>
+        <label for="metricSelect">Metric</label>
+        <select id="metricSelect">
+          <option value="temp_anomaly_c">Temperature anomaly (°C)</option>
+          <option value="precip_change_pct">Precipitation change (%)</option>
+          <option value="co2_ppm">Greenhouse gas concentration proxy (ppm CO₂)</option>
+        </select>
+      </div>
+      <div>
+        <label for="scenarioSelect">Scenario for bar/heatmap</label>
+        <select id="scenarioSelect">
+          <option value="ssp126">SSP1-2.6</option>
+          <option value="ssp245">SSP2-4.5</option>
+          <option value="ssp585">SSP5-8.5</option>
+        </select>
+      </div>
+      <div>
+        <label for="yearSlider">Focus year: <span id="yearValue"></span></label>
+        <input id="yearSlider" type="range" min="2015" max="2065" value="2050" />
+      </div>
+      <button id="resetButton">Reset zoom</button>
+    </section>
+
+    <section class="chart-card">
+      <div class="chart-header">
+        <div>
+          <h2 id="lineTitle">Trend over time</h2>
+          <p>Historical values are shown before 2015; SSP pathways show possible futures after 2015.</p>
+        </div>
+        <div id="legend"></div>
+      </div>
+      <svg id="lineChart" aria-label="Interactive climate line chart"></svg>
+      <div id="tooltip"></div>
+    </section>
+
+    <section class="grid-two">
+      <section class="chart-card small-card">
+        <div class="chart-header">
+          <div>
+            <h2 id="barTitle">Regional comparison</h2>
+            <p>Compare regions in the selected year and scenario.</p>
+          </div>
+        </div>
+        <svg id="barChart" aria-label="Regional comparison bar chart"></svg>
+      </section>
+
+      <section class="chart-card small-card">
+        <div class="chart-header">
+          <div>
+            <h2 id="heatTitle">Scenario divergence</h2>
+            <p>Compare future scenarios for each region in the selected year.</p>
+          </div>
+        </div>
+        <svg id="heatChart" aria-label="Scenario divergence heatmap"></svg>
+      </section>
+    </section>
+
+    <section class="writeup">
+      <h2>Write-up</h2>
+      <h3>Rationale for design decisions</h3>
+      <p>We used three coordinated views because the question asks about change over time, regional comparison, and future scenario divergence. The main line chart emphasizes temporal trends. The bar chart makes it easier to compare regions at one selected year. The heatmap shows how strongly the three SSP futures separate from one another across regions.</p>
+      <p>The metric dropdown lets viewers switch between temperature anomaly, precipitation change, and a greenhouse gas concentration proxy. This supports dynamic querying because the same visual structure can answer related climate questions without overwhelming the viewer. The region filter reduces clutter in the line chart, while the year slider links all views together and helps users see how scenario differences become larger later in the century.</p>
+      <p>We chose line position on shared axes for trends because it is easier to read than area or pie encodings. Color is used for scenario because scenarios are categorical and important throughout the project. Tooltips provide details-on-demand, and zooming/panning supports closer inspection of specific time periods.</p>
+
+      <h3>Data transformations</h3>
+      <p>The original CMIP6 data is monthly gridded climate model output. We selected near-surface air temperature and precipitation, converted temperature from Kelvin to Celsius, converted precipitation from kg/m²/s to annualized mm/day values, averaged the data into broad world regions, and summarized monthly values into annual regional means. Temperature is shown as an anomaly from a 1995–2014 baseline, while precipitation is shown as percent change from the same baseline. Greenhouse gas concentration is represented as a scenario pathway proxy so the visualization can connect the climate responses to the emissions futures.</p>
+
+      <h3>Development process</h3>
+      <p>Our team first explored the CMIP6 dataset and considered maps, small multiples, and static line charts. We chose a coordinated interactive dashboard because it directly supports comparison across time, region, metric, and scenario. One person handled data processing, one person built the D3 interactions, and one person refined the write-up and design. Most time was spent reducing the large climate dataset into a small CSV that loads smoothly on GitHub Pages.</p>
+    </section>
+  </main>
+  <script src="main.js"></script>
+</body>
+</html>
