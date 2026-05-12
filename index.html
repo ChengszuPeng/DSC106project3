@@ -11,8 +11,36 @@
   <main>
     <section class="hero">
       <p class="eyebrow">DSC 106 Project 3 · Interactive Visualization</p>
-      <h1>How do temperature, precipitation, and greenhouse gas pathways change across regions and future scenarios?</h1>
-      <p class="subtitle">This interactive web page compares historical climate trends with three future SSP pathways. Use the controls to switch region, metric, scenario, and focus year.</p>
+
+      <h1>
+        How do temperature, precipitation, and greenhouse gas pathways
+        change across regions and future scenarios?
+      </h1>
+
+      <p class="subtitle">
+        This interactive web page compares historical climate trends with three future SSP pathways.
+      </p>
+
+      <p class="subtitle">
+        Use the controls to switch region, metric, scenario, and focus year.
+      </p>
+
+      <p class="subtitle">
+        Shared Socioeconomic Pathways (SSP) are scientific scenarios describing possible futures
+        based on greenhouse gas emissions between now and 2100.
+      </p>
+
+      <p class="subtitle">
+        SSP1-2.6 — The Optimistic Path: aggressive climate action and renewable energy transition.
+      </p>
+
+      <p class="subtitle">
+        SSP2-4.5 — The Middle Road: moderate emissions reductions with partial progress.
+      </p>
+
+      <p class="subtitle">
+        SSP5-8.5 — The Worst Case: continued fossil fuel expansion with minimal climate action.
+      </p>
     </section>
 
     <section class="controls">
@@ -80,15 +108,16 @@
     <section class="writeup">
       <h2>Write-up</h2>
       <h3>Rationale for design decisions</h3>
-      <p>We used three coordinated views because the question asks about change over time, regional comparison, and future scenario divergence. The main line chart emphasizes temporal trends. The bar chart makes it easier to compare regions at one selected year. The heatmap shows how strongly the three SSP futures separate from one another across regions.</p>
-      <p>The metric dropdown lets viewers switch between temperature anomaly, precipitation change, and a greenhouse gas concentration proxy. This supports dynamic querying because the same visual structure can answer related climate questions without overwhelming the viewer. The region filter reduces clutter in the line chart, while the year slider links all views together and helps users see how scenario differences become larger later in the century.</p>
-      <p>We chose line position on shared axes for trends because it is easier to read than area or pie encodings. Color is used for scenario because scenarios are categorical and important throughout the project. Tooltips provide details-on-demand, and zooming/panning supports closer inspection of specific time periods.</p>
+      <p>The message behind our visualization is to show the impact of different human commitments and decisions on climate change. We visualize the data granularly, each year being available; and across distinct regions. To start, we have a focus year slider which denotes the year where we display granular data of per-region and per-strategy temperature anomaly projections. Next, we'll discuss: the graph of temperature anomaly with 3 projections. We plot the X-axis over time, and Y-axis as the temperature anomaly compared to the average temperature between 1995-2014. This serves the graph which gives context to the other two graphs. The graph remains static, apart from the black dotted line to visualize which era of the projection we are looking at. Our rationale for this temporal grounding is to emphasize that change cannot be confirmed in the short term time horizon, and that they start to happen after years have passed; around 30 years would you start to notice big differences in temperature anomalies. The color coding from blue to red biases the viewer to support the less-polluting graph, and is ordered by severity of strategy (or lack thereof).<P>
+      <P> Apart from this, we also have our granular data visualizations; which are the regional values of one strategy, and the "scenario divergence" visualization. Here, granular data is used to illustrate that the impact of climate change and greenhouse gases differer across regions. Scenario divergence does both strategy difference and regional differences; whereas the specific bar plots for strategies highlight the regional differences.
+          From this, we hope the viewer can infer that the impact of climate change varies widely between regions -- less serious for North America, than EU or Asia, with Arctic being the worst affected area due to climate change.
+          Whereas the scenario divergence allows us to see the three strategies' impact on the same graph, with granular detail among the regions that we use. This allows the viewer to stumble upon the fact that climate change takes time for the effects to be visible, but there would be dire consequences for not reducing consumption.<p>
 
       <h3>Data transformations</h3>
       <p>The original CMIP6 data is monthly gridded climate model output. We selected near-surface air temperature and precipitation, converted temperature from Kelvin to Celsius, converted precipitation from kg/m²/s to annualized mm/day values, averaged the data into broad world regions, and summarized monthly values into annual regional means. Temperature is shown as an anomaly from a 1995–2014 baseline, while precipitation is shown as percent change from the same baseline. Greenhouse gas concentration is represented as a scenario pathway proxy so the visualization can connect the climate responses to the emissions futures.</p>
 
       <h3>Development process</h3>
-      <p>Our team first explored the CMIP6 dataset and considered maps, small multiples, and static line charts. We chose a coordinated interactive dashboard because it directly supports comparison across time, region, metric, and scenario. One person handled data processing, one person built the D3 interactions, and one person refined the write-up and design. Most time was spent reducing the large climate dataset into a small CSV that loads smoothly on GitHub Pages.</p>
+      <p>Our initial project idea was to create a heatmap of only the United States that covered temperature anomaly, precipitation, and greenhouse gas concentration proxy. Although the visualization looked great, the readability wasn't the best, which caused us to switch gears to create three different visualizations in order to increase our readability while still maintaining the interactive visualization.We brainstormed another idea, which was just using the projection numbers raw and displaying them in a helpful manner, aiding the interpretation of the numbers. We immediately agreed that the graph with 3 projections is something we want to include, however we couldn't agree on the other visualizations. Since we had so much data, we need to make a choice as to how granular we want the data to be, and the generalizations that are implicated by such visualizations. Since the map thing didn't work, we wanted to try if we can include the map in the website. However, considering that the anchoring graph is the 3-projection graph, the map is incompatible with this design feature as the emphasis changes into the impacts on smaller regions as opposed to the temporal focus. If we decide to use the map, then the temporal focus is weakened, and the message that it takes 30 years or more to notice a difference gets muddled in the pretty visuals.TL;DR Even though maps are more aesthetic, they distract from the underlying message and goal we are trying to convey, which is to emphasize how the effect of our decisions compound over a long time horizon.<p>
     </section>
   </main>
   <script src="main.js"></script>
